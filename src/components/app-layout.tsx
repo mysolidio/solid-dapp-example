@@ -12,11 +12,39 @@ import { ThemeToggle } from './theme-toggle'
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from './ui/dialog'
 import { ConnectWalletMenu } from './wallet-ui'
+import { useKycStatus } from '@/hooks/use-kyc-status'
+import { useSolanaWallet } from '@wallet-ui/react'
 
 export function AppLayout({ children, links }: { children: ReactNode; links: { label: string; path: string }[] }) {
+  const { data: kycStatus, isLoading } = useKycStatus()
+  const [selectedWalletAccount] = useSolanaWallet()
+  
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <div className="flex flex-col min-h-screen">
+        {selectedWalletAccount && !isLoading && (
+          <>
+            {!kycStatus?.isVerified && (
+              <div className="bg-red-900 text-white text-center py-2">
+                Wallet verification required. Please{' '}
+                <a 
+                  href="https://dev-app.mysolid.io" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="underline font-bold hover:text-red-200"
+                >
+                  complete KYC verification
+                </a>
+                {' '}to access all features.
+              </div>
+            )}
+            {kycStatus?.isVerified && (
+              <div className="bg-green-600 text-white text-center py-2">
+                <div>Your wallet is verified and ready to use all features!</div>
+              </div>
+            )}
+          </>
+        )}
         <AppHeader links={links} />
         <main className="flex-grow container mx-auto p-4">
           <ChainChecker>
@@ -40,7 +68,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
           <Link className="text-xl hover:text-gray-500 dark:hover:text-white" href="/">
-            <span>Solidexample</span>
+            <span>Solid Example App</span>
           </Link>
           <div className="hidden md:flex items-center">
             <ul className="flex gap-4 flex-nowrap items-center">
