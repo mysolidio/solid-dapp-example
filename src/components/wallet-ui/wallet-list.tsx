@@ -33,7 +33,7 @@ function WalletButton({ wallet, onAccountSelect, onError, setOpen }: WalletButto
   }
 
   return (
-    <Button variant="listItem" className="w-full justify-start px-4 py-6" onClick={handleClick}>
+    <Button variant="outline" className="w-full justify-start px-4 py-6" onClick={handleClick}>
       <WalletMenuItemContent wallet={wallet} />
     </Button>
   )
