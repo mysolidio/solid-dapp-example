@@ -82,6 +82,7 @@ export type CloseAttestationInstruction<
 
 export type CloseAttestationInstructionData = { discriminator: number };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type CloseAttestationInstructionDataArgs = {};
 
 export function getCloseAttestationInstructionDataEncoder(): Encoder<CloseAttestationInstructionDataArgs> {

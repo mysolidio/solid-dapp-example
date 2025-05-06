@@ -93,9 +93,9 @@ export class SolidSdk {
   /**
    * Decode attestation data according to schema layout
    */
-  decodeAttestationData(data: Uint8Array, layout: number[], fieldNames: string[]): Record<string, any> {
+  decodeAttestationData(data: Uint8Array, layout: number[], fieldNames: string[]): Record<string, unknown> {
     let offset = 0
-    const result: Record<string, any> = {}
+    const result: Record<string, unknown> = {}
     const dataBuffer = Buffer.from(data)
 
     for (let i = 0; i < layout.length; i++) {
